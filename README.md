@@ -46,6 +46,53 @@ Run the Main class using java Main.
 To create .class file of all the .java files ---- javac -d out src/filename.java;    - (-d directs to create .class file in out folder inside src folder)
 To run the .class file for final execution ------ java -cp out d/../Main             -(-cp sets the classpath to the out directory where the .class files are located)
 
+## USECASE 2
 
+## NotificationSystem
 
+## Discription
+
+The notification system facilitates user interaction by validating email addresses and retrieving user data from a cache. It creates notification messages and  delivers through a third-party service. The system efficiently handles errors related to invalid emails or missing user data. Overall, it streamlines the process of sending notifications to users.
+
+## function that the code performs  
+The server creates a message that should be sent to a user
+UserService then checks for the presence of email in cache and validates it
+If the email is validated then the message is passed on to a ThirdParty service which then handles the pipelines in which the message should be sent to the user.  
+This entire logic is then encapulated within notificationservice class and continuely executes the other classes.
+
+## walk-through the code 
+
+--> Server : This class represents the message or notification content that will be sent to the user. Encapsulation: The message is kept private, and the class provides a getter (getMessage()) to access the message. This ensures controlled access to the message.
+Constructor: The constructor initializes the Server object with a message that gets passed when creating an instance.
+
+--> CacheService: The CacheService is used to simulate a simple cache of users, mapping their email addresses to usernames. This allows for quick retrieval of user data, mimicking what would happen in a real system using an in-memory cache.
+Methods:getUserFromCache() Retrieves the username from the cache based on the provided email. If the email is not found in the cache, it returns null.
+Encapsulation: The cache (a HashMap object) is encapsulated within the class and is accessed through methods, preventing direct manipulation from outside.
+
+-->ThirdPartyService: This class simulates a third-party service responsible for sending notifications to the user.
+Method:sendUser() Accepts the user's email and the notification message and prints them out to simulate the notification being sent. In a real-world system, this might involve sending an email, SMS, or push notification.
+
+--> UserService : This class is responsible for validating the user's email and retrieving user information from the cache.
+Methods:getUserEmail() Fetches the user's email from the cache using the CacheService. If the email is not found, it throws an exception.
+isValidEmail(): Checks whether the provided email has a valid format (contains "@", ".", and ".com").
+Dependency: This class uses CacheService for user data, demonstrating dependency injection through the constructor.
+
+--> NotificationSystem :The core class that handles the process of sending notifications. It interacts with both UserService (to get user info) and ThirdPartyService (to send the notification).
+Method: sendNotification(): This method checks if the provided email is valid using UserService. If valid, it retrieves the user's email and sends a notification via ThirdPartyService. If the email is invalid, it throws an exception.
+Abstraction: The class abstracts away the details of user validation, cache retrieval, and third-party interactions, focusing on the main task of sending a notification.
+
+--> Main: The entry point of the application. It sets up the necessary services and simulates the process of sending notifications by prompting the user to enter an email.
+It initializes the core components: CacheService, UserService, ThirdPartyService, and NotificationSystem.
+It prompts the user for their email input via the console.
+It passes the email to the NotificationSystem, which validates the email, retrieves user info from the cache, and sends a notification if all checks pass.
+If any errors (like invalid email format or missing user data) occur, the program catches and displays the relevant error message to the user.
+
+--> Installation
+Clone the repository.
+Compile the Java files using javac.
+Run the Main class using java Main.
+
+## commands 
+To create .class file of all the .java files ---- javac -d out src/filename.java;    - (-d directs to create .class file in "out" folder inside src folder)
+To run the .class file for final execution ------ java -cp out d/../Main             -(-cp sets the classpath to the out directory where the .class files are located)
 
